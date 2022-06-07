@@ -27,9 +27,9 @@ jobs:
     - name: Get commit hash
       id: vars
       run: |
-        echo "::set-output name=DSOAL_sha_short::$(git rev-parse --short HEAD)"
+        echo "::set-output name=DSOAL_sha_short::$(git rev-parse --short=7 HEAD)"
         cd "openal-soft"
-        echo "::set-output name=ALSOFT_sha_short::$(git rev-parse --short HEAD)"
+        echo "::set-output name=ALSOFT_sha_short::$(git rev-parse --short=7 HEAD)"
         cd "${{github.workspace}}"
     
     - name: Create Artifacts folder
