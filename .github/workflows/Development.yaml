@@ -18,7 +18,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Checkout submodules
-      run: git submodule update --init --recursive --remote
+      run: git submodule update --init --recursive --remote --merge
 
     - name: Get current date
       id: date
@@ -28,7 +28,9 @@ jobs:
       id: vars
       run: |
         echo "::set-output name=DSOAL_sha_short::$(git rev-parse --short HEAD)"
-        echo "::set-output name=ALSOFT_sha_short::$(git rev-parse --short HEAD:openal-soft)"
+        cd "openal-soft"
+        echo "::set-output name=ALSOFT_sha_short::$(git rev-parse --short HEAD)"
+        cd "${{github.workspace}}"
     
     - name: Create Artifacts folder
       run: mkdir "Artifacts"
