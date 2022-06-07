@@ -15,10 +15,10 @@ jobs:
     runs-on: windows-latest
     steps:
 
-    - name: Checkout repo with submodules
+    - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        submodules: recursive
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
 
     - name: Get current date
       id: date

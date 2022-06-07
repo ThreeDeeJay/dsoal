@@ -13,10 +13,10 @@ jobs:
     runs-on: windows-latest
     steps:
 
-    - name: Checkout repo with submodules
+    - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        submodules: recursive
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
 
     - name: Get current date
       id: date
@@ -31,7 +31,7 @@ jobs:
     - name: Get commit hash
       id: vars
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-    
+
     - name: Create Artifacts folder
       run: mkdir "Artifacts"
 
@@ -120,7 +120,7 @@ jobs:
       uses: papeloto/action-zip@v1
       with:
         files: DSOAL_v${{steps.tag.outputs.tag}}/
-        dest: "Artifacts/DSOAL-latest.zip"
+        dest: "Artifacts/DSOAL.zip"
         
     - name: GitHub release
       uses: "marvinpinto/action-automatic-releases@latest"
