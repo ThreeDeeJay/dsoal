@@ -24,7 +24,7 @@ jobs:
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
     
-    - name: Get commit hashes
+    - name: Get commit hash
       id: vars
       run: |
         echo "::set-output name=DSOAL_sha_short::$(git rev-parse --short HEAD)"
@@ -55,7 +55,7 @@ jobs:
     - name: Win32 - Compress artifact
       uses: papeloto/action-zip@v1
       with:
-        files: '\[${{steps.date.outputs.date}}\]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/'
+        files: '[${{steps.date.outputs.date}}]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/'
         dest: "Artifacts/[${{steps.date.outputs.date}}]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32.zip"
 
     - name: Win32 - Upload artifact to GitHub actions
@@ -91,7 +91,7 @@ jobs:
     - name: Win64 - Compress artifact
       uses: papeloto/action-zip@v1
       with:
-        files: '\[${{steps.date.outputs.date}}\]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-x64/'
+        files: '[${{steps.date.outputs.date}}]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-x64/'
         dest: "Artifacts/[${{steps.date.outputs.date}}]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64.zip"
 
     - name: Win64 - Upload artifact to GitHub actions
@@ -117,7 +117,7 @@ jobs:
     - name: Compress artifacts
       uses: papeloto/action-zip@v1
       with:
-        files: '\[${{steps.date.outputs.date}}\]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/'
+        files: '[${{steps.date.outputs.date}}]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/'
         dest: "Artifacts/DSOAL-latest.zip"
 
     - name: GitHub pre-release
@@ -126,5 +126,5 @@ jobs:
         repo_token: "${{secrets.GITHUB_TOKEN}}"
         automatic_release_tag: "latest"
         prerelease: true
-        title: "DSOAL ${{steps.date.outputs.date}}_${{steps.vars.outputs.sha_short}}"
+        title: "[${{steps.date.outputs.date}}]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}"
         files: "Artifacts/*"
