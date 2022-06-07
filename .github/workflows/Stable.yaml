@@ -1,15 +1,14 @@
 name: Stable build
 
 on:
-  push:
-    tags:
-      - '*.*.*'
+  create:
 
 env:
   build_type: Release
 
 jobs:
   Windows:
+    if: ${{startsWith(github.ref, 'refs/tags/*.*.*')}}
     runs-on: windows-latest
     steps:
 
