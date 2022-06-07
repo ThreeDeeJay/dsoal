@@ -61,7 +61,7 @@ jobs:
     - name: Win32 - Upload artifact to GitHub actions
       uses: actions/upload-artifact@v3
       with:
-        name: /[${{steps.date.outputs.date}}/]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32
+        name: [${{steps.date.outputs.date}}]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32
         path: /[${{steps.date.outputs.date}}/]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/
 
     - name: Win32 - Cleanup build folder
@@ -97,7 +97,7 @@ jobs:
     - name: Win64 - Upload artifact to GitHub actions
       uses: actions/upload-artifact@v3
       with:
-        name: /[${{steps.date.outputs.date}}/]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64
+        name: [${{steps.date.outputs.date}}]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64
         path: /[${{steps.date.outputs.date}}/]DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}+OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-x64/
 
     #Release
