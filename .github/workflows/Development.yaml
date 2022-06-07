@@ -128,5 +128,5 @@ jobs:
         repo_token: "${{secrets.GITHUB_TOKEN}}"
         automatic_release_tag: "latest"
         prerelease: true
-        title: "[${{steps.date.outputs.date}}] DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}"
+        title: "[${{steps.date.outputs.date}}] DSOAL-${{steps.vars.outputs.DSOAL_sha_short}} OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}"
         files: "Artifacts/*"
