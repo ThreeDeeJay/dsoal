@@ -16,7 +16,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Checkout submodules
-      run: git submodule update --recursive
+      run: git submodule update --init --recursive --merge
 
     - name: Get current date
       id: date
