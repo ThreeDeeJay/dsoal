@@ -23,7 +23,7 @@ jobs:
     - name: Get current date
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-    
+
     - name: Get commit hash
       id: vars
       run: |
@@ -31,21 +31,21 @@ jobs:
         cd "openal-soft"
         echo "::set-output name=ALSOFT_sha_short::$(git rev-parse --short=7 HEAD)"
         cd "${{github.workspace}}"
-    
+
     - name: Create Artifacts folder
       run: mkdir "Artifacts"
 
     #32-bit
-    - name: Win32 - Build DSOAL 
+    - name: Win32 - Build DSOAL
       run: |
         cmake -B "${{github.workspace}}/build" -A Win32
         cmake --build "${{github.workspace}}/build" --config ${{env.build_type}}
-    
+
     - name: Win32 - Build OpenAL Soft
       run: |
         cmake -B "${{github.workspace}}/openal-soft/build" -DCMAKE_BUILD_TYPE=${{env.build_type}} -A Win32 -DALSOFT_BUILD_ROUTER=ON -DALSOFT_REQUIRE_WINMM=ON -DALSOFT_REQUIRE_DSOUND=ON -DALSOFT_REQUIRE_WASAPI=ON "${{github.workspace}}/openal-soft"
         cmake --build "${{github.workspace}}/openal-soft/build" --config ${{env.build_type}}
-    
+
     - name: Win32 - Collect binaries
       run: |
         mkdir "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32"
@@ -82,12 +82,12 @@ jobs:
       run: |
         cmake -B "${{github.workspace}}/build" -A x64
         cmake --build "${{github.workspace}}/build" --config ${{env.build_type}}
-    
+
     - name: Win64 - Build OpenAL Soft
       run: |
         cmake -B "${{github.workspace}}/openal-soft/build" -DCMAKE_BUILD_TYPE=${{env.build_type}} -A x64 -DALSOFT_BUILD_ROUTER=ON -DALSOFT_REQUIRE_WINMM=ON -DALSOFT_REQUIRE_DSOUND=ON -DALSOFT_REQUIRE_WASAPI=ON "${{github.workspace}}/openal-soft"
         cmake --build "${{github.workspace}}/openal-soft/build" --config ${{env.build_type}}
-    
+
     - name: Win64 - Collect binaries
       run: |
         mkdir "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64"
