@@ -72,7 +72,7 @@ jobs:
         name: ${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32
         path: ${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/
 
-    - name: Win32 - Cleanup build folder
+    - name: Cleanup build folder
       run: |
         Remove-Item ${{github.workspace}}/build/* -Recurse -Force
         Remove-Item ${{github.workspace}}/openal-soft/build/* -Recurse -Force
@@ -122,9 +122,9 @@ jobs:
         move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/dsoal-aldrv.dll" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win32/dsoal-aldrv.dll"
         move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/alsoft.ini" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win32/alsoft.ini"
         mkdir "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win64"
-        move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-x64/dsound.dll" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win64/dsound.dll"
-        move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-x64/dsoal-aldrv.dll" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win64/dsoal-aldrv.dll"
-        move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-x64/alsoft.ini" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win64/alsoft.ini"
+        move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/dsound.dll" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win64/dsound.dll"
+        move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/dsoal-aldrv.dll" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win64/dsoal-aldrv.dll"
+        move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/alsoft.ini" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win64/alsoft.ini"
         mkdir "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation"
         copy "${{github.workspace}}/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/DSOAL-README.txt"
         copy "${{github.workspace}}/LICENSE" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/DSOAL-License.txt"
