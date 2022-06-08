@@ -16,7 +16,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Checkout submodules
-      run: git submodule update --init --recursive --remote --merge
+      run: git submodule update --recursive
 
     - name: Get current date
       id: date
@@ -109,14 +109,14 @@ jobs:
     - name: Win64 - Compress artifact
       uses: papeloto/action-zip@v1
       with:
-        files: DSOAL_v${{steps.tag.outputs.tag}}-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft_v${{steps.vars.outputs.ALSOFT_version}}-x64/
+        files: DSOAL_v${{steps.tag.outputs.tag}}-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft_v${{steps.vars.outputs.ALSOFT_version}}-Win64/
         dest: "Artifacts/DSOAL_v${{steps.tag.outputs.tag}}-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft_v${{steps.vars.outputs.ALSOFT_version}}-Win64.zip"
 
     - name: Win64 - Upload artifact to GitHub actions
       uses: actions/upload-artifact@v3
       with:
         name: DSOAL_v${{steps.tag.outputs.tag}}-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft_v${{steps.vars.outputs.ALSOFT_version}}-Win64
-        path: DSOAL_v${{steps.tag.outputs.tag}}-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft_v${{steps.vars.outputs.ALSOFT_version}}-x64/
+        path: DSOAL_v${{steps.tag.outputs.tag}}-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft_v${{steps.vars.outputs.ALSOFT_version}}-Win64/
 
     #Release
     - name: Separate binaries by architecture

@@ -105,14 +105,14 @@ jobs:
     - name: Win64 - Compress artifact
       uses: papeloto/action-zip@v1
       with:
-        files: '${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-x64/'
+        files: '${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/'
         dest: "Artifacts/${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64.zip"
 
     - name: Win64 - Upload artifact to GitHub actions
       uses: actions/upload-artifact@v3
       with:
         name: ${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64
-        path: ${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-x64/
+        path: ${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/
 
     #Release
     - name: Separate binaries by architecture
