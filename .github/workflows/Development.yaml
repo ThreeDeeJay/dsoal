@@ -8,7 +8,7 @@ on:
       - '*.*.*'
 
 env:
-  build_type: Release
+  build_type: Debug
 
 jobs:
   Windows:
@@ -53,9 +53,9 @@ jobs:
         move "${{github.workspace}}/openal-soft/build/${{env.build_type}}/soft_oal.dll" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/dsoal-aldrv.dll"
         copy "${{github.workspace}}/openal-soft/alsoftrc.sample" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/alsoft.ini"
         mkdir "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/Documentation"
-        copy "${{github.workspace}}/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/Documentation/DSOAL-README.txt"
+        copy "${{github.workspace}}/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/Documentation/DSOAL-ReadMe.txt"
         copy "${{github.workspace}}/LICENSE" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/Documentation/DSOAL-License.txt"
-        copy "${{github.workspace}}/openal-soft/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/Documentation/OpenALSoft-README.txt"
+        copy "${{github.workspace}}/openal-soft/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/Documentation/OpenALSoft-ReadMe.txt"
         copy "${{github.workspace}}/openal-soft/COPYING" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/Documentation/OpenALSoft-License.txt"
         copy "${{github.workspace}}/openal-soft/BSD-3Clause" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/Documentation/OpenALSoft-BSD-3Clause.txt"
         copy "${{github.workspace}}/openal-soft/ChangeLog" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win32/Documentation/OpenALSoft-ChangeLog.txt"
@@ -95,9 +95,9 @@ jobs:
         move "${{github.workspace}}/openal-soft/build/${{env.build_type}}/soft_oal.dll" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/dsoal-aldrv.dll"
         copy "${{github.workspace}}/openal-soft/alsoftrc.sample" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/alsoft.ini"
         mkdir "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/Documentation"
-        copy "${{github.workspace}}/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/Documentation/DSOAL-README.txt"
+        copy "${{github.workspace}}/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/Documentation/DSOAL-ReadMe.txt"
         copy "${{github.workspace}}/LICENSE" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/Documentation/DSOAL-License.txt"
-        copy "${{github.workspace}}/openal-soft/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/Documentation/OpenALSoft-README.txt"
+        copy "${{github.workspace}}/openal-soft/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/Documentation/OpenALSoft-ReadMe.txt"
         copy "${{github.workspace}}/openal-soft/COPYING" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/Documentation/OpenALSoft-License.txt"
         copy "${{github.workspace}}/openal-soft/BSD-3Clause" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/Documentation/OpenALSoft-BSD-3Clause.txt"
         copy "${{github.workspace}}/openal-soft/ChangeLog" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/Documentation/OpenALSoft-ChangeLog.txt"
@@ -126,9 +126,9 @@ jobs:
         move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/dsoal-aldrv.dll" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win64/dsoal-aldrv.dll"
         move "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}-Win64/alsoft.ini" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Win64/alsoft.ini"
         mkdir "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation"
-        copy "${{github.workspace}}/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/DSOAL-README.txt"
+        copy "${{github.workspace}}/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/DSOAL-ReadMe.txt"
         copy "${{github.workspace}}/LICENSE" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/DSOAL-License.txt"
-        copy "${{github.workspace}}/openal-soft/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/OpenALSoft-README.txt"
+        copy "${{github.workspace}}/openal-soft/README.md" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/OpenALSoft-ReadMe.txt"
         copy "${{github.workspace}}/openal-soft/COPYING" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/OpenALSoft-License.txt"
         copy "${{github.workspace}}/openal-soft/BSD-3Clause" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/OpenALSoft-BSD-3Clause.txt"
         copy "${{github.workspace}}/openal-soft/ChangeLog" "${{steps.date.outputs.date}}_DSOAL-${{steps.vars.outputs.DSOAL_sha_short}}_OpenALSoft-${{steps.vars.outputs.ALSOFT_sha_short}}/Documentation/OpenALSoft-ChangeLog.txt"
