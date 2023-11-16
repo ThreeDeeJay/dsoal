@@ -3,7 +3,7 @@ name: Untagged build
 on:
   push:
     branches:
-      - 'c++-rewrite'
+      - 'rewrite'
     tags-ignore:
       - '*.*.*'
     paths-ignore:
@@ -136,7 +136,7 @@ jobs:
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{secrets.GITHUB_TOKEN}}"
-        automatic_release_tag: "c++-rewrite"
+        automatic_release_tag: "rewrite"
         prerelease: true
         title: "[${{needs.Build.outputs.CurrentDate}}] DSOAL r${{needs.Build.outputs.DSOALCommitCount}}@${{needs.Build.outputs.DSOALCommitHashShort}} + OpenAL Soft r${{needs.Build.outputs.OpenALSoftCommitCount}}@${{needs.Build.outputs.OpenALSoftCommitHashShort}}"
         files: "Release/*"
