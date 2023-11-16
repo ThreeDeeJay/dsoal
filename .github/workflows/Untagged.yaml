@@ -38,7 +38,7 @@ jobs:
     steps:
     
     - name: Clone DSOAL
-      run: git clone https://github.com/kcat/dsoal.git .
+      run: git clone -b c++-rewrite https://github.com/kcat/dsoal.git .
 
     - name: Clone OpenAL Soft
       run: git clone https://github.com/kcat/openal-soft.git

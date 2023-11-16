@@ -32,8 +32,8 @@ jobs:
           }
     steps:
     
-    - name: Checkout repository
-      uses: actions/checkout@v3.0.0
+    - name: Clone DSOAL
+      run: git clone -b c++-rewrite https://github.com/kcat/dsoal.git .
 
     - name: Clone latest OpenAL Soft commit
       run: |
