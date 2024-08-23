@@ -124,9 +124,15 @@ jobs:
       run: |
         7z a ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.zip ./${{env.Configuration}}/* -mx=9
 
-    - name: Release
+    - name: gh log
       run: |
         gh --version
         gh auth status
+
+    - name: Release
+      run: |
         gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}}
+
+    - name: Upload
+      run: |
         gh release upload r${{env.DSOALCommitCount}} ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.zip --clobber
