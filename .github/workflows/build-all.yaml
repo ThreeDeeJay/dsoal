@@ -125,6 +125,7 @@ jobs:
 
     - name: Release
       run: |
+        gh --version
         gh auth status
         gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}}
         gh release upload r${{env.DSOALCommitCount}} ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.zip --clobber
