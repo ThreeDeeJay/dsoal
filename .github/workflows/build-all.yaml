@@ -1,5 +1,7 @@
 name: Build all
 
+permissions: write-all
+
 on:
   push:
     branches:
