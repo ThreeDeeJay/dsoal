@@ -1,7 +1,8 @@
 name: Build all
 
 permissions:
-  workflows: write
+  contents: write
+  actions: write
 
 on:
   push:
