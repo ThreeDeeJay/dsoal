@@ -14,8 +14,8 @@ on:
 
 env:
   Configuration: Release
-  DSOALRepo: kcat/dsoal
-  DSOALBranch: master
+  DSOALRepo: ${{github.repository}}
+  DSOALBranch: ${{github.ref_name}}
   OpenALSoftRepo: kcat/openal-soft
   OpenALSoftBranch: master
   GH_TOKEN: ${{ secrets.TOKEN }} #Releases require a Personal Access Token with read+write permissions for Contents and Workflows passed to the workflow as a secret variable https://github.com/cli/cli/issues/9514
