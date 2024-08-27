@@ -37,9 +37,9 @@ jobs:
   Build:
     needs: setup
     name: ${{matrix.DSOALCommitHash}}
-    runs-on: windows-2022
+    runs-on: windows-2019
     strategy:
-      max-parallel: 10
+      max-parallel: 5
       fail-fast: false
       matrix:
         DSOALCommitHash: ${{fromJSON(needs.setup.outputs.matrix)}}
