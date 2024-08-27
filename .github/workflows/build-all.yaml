@@ -30,7 +30,7 @@ jobs:
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
           git reset --hard 52224b17832fda41d02153cf8f56d27cd94bf79a
           git log --max-count=6 --format="%h %d"
-          echo "DSOALCommitHash=[\"$(git log --max-count=8 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
+          echo "DSOALCommitHash=[\"$(git log --max-count=9 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{ steps.matrix.outputs.DSOALCommitHash }}
 
@@ -55,6 +55,8 @@ jobs:
         echo "DSOALCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
 #curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
+
+    - run-name: ${{env.DSOALCommitCount}}
 
     - name: Clone OpenAL Soft
       run: |
