@@ -102,7 +102,7 @@ jobs:
         copy "${{github.workspace}}/openal-soft/build/Win64/${{env.Configuration}}/soft_oal.dll"                            "${{env.Configuration}}/HRTF/Win64/dsoal-aldrv.dll"
         curl https://raw.githubusercontent.com/${{env.OpenALSoftRepo}}/${{env.OpenALSoftBranch}}/configs/HRTF/alsoft.ini -o "${{env.Configuration}}/HRTF/Win32/alsoft.ini"
         curl https://raw.githubusercontent.com/${{env.OpenALSoftRepo}}/${{env.OpenALSoftBranch}}/configs/HRTF/alsoft.ini -o "${{env.Configuration}}/HRTF/Win64/alsoft.ini"
-        ren  "${{github.workspace}}/readme.txt"                                                                             "README.md"
+        if ("readme.txt") {ren readme.txt README.md}
         copy "${{github.workspace}}/README.md"                                                                              "${{env.Configuration}}/Documentation/DSOAL-ReadMe.txt"
         copy "${{github.workspace}}/LICENSE"                                                                                "${{env.Configuration}}/Documentation/DSOAL-License.txt"
         echo "${{env.DSOALRepo}}" >>                                                                                        "${{env.Configuration}}/Documentation/DSOAL-Version.txt"
@@ -130,5 +130,5 @@ jobs:
       run: |
         gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{env.DSOALCommitCount}} - ${{env.DSOALCommitTitle}}" --notes "DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} ${{env.DSOALBranch}} - ${{env.DSOALCommitTitle}} [${{env.DSOALCommitDateTimeZone}}]
         OpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} - ${{env.OpenALSoftCommitTitle}} [${{env.OpenALSoftCommitDateTimeZone}}]
-        ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"
+        Build: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}/job/${{github.job}}"
         gh release upload r${{env.DSOALCommitCount}} ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.7z --clobber
