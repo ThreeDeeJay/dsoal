@@ -56,7 +56,7 @@ jobs:
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
 #curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
 
-    - job-name: ${{env.DSOALCommitCount}}
+    - name: ${{env.DSOALCommitCount}}
       run: |
         echo ${{env.DSOALCommitCount}}
 
