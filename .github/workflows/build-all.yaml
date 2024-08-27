@@ -55,6 +55,7 @@ jobs:
         echo "DSOALCommitDateTimeZone=$(git show -s --date=iso-local --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
+        gh repo set-default ${{env.DSOALRepo}}
         echo "JobID=$(gh run view ${{ github.run_id }} --json jobs | jq -r '.jobs[] | select(.name == "${{ github.job }}") | .databaseId')" >> $env:GITHUB_ENV
 #curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
 
