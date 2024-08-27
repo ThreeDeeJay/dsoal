@@ -43,7 +43,7 @@ jobs:
       matrix:
         DSOALCommitHash: ${{fromJSON(needs.setup.outputs.matrix)}}
     steps:
-    
+
     - name: Clone DSOAL
       run: |
         git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
@@ -55,7 +55,7 @@ jobs:
         echo "DSOALCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
 #curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
-        
+
     - name: Clone OpenAL Soft
       run: |
         git clone --branch ${{env.OpenALSoftBranch}} https://github.com/${{env.OpenALSoftRepo}}.git
@@ -77,10 +77,11 @@ jobs:
 
     - name: Build DSOAL
       run: |
-        cmake -B "${{github.workspace}}/build/Win32" -A Win32 -DOPENAL_INCLUDE_DIR="openal-soft/include/AL" -DOPENAL_LIBRARY="openal-soft/build/${{env.Configuration}}/OpenAL32.lib"
+        cmake -B "${{github.workspace}}/build/Win32" -A Win32
         cmake --build "${{github.workspace}}/build/Win32" --config ${{env.Configuration}}
-        cmake -B "${{github.workspace}}/build/Win64" -A x64 -DOPENAL_INCLUDE_DIR="openal-soft/include/AL" -DOPENAL_LIBRARY="openal-soft/build/${{env.Configuration}}/OpenAL32.lib"
+        cmake -B "${{github.workspace}}/build/Win64" -A x64
         cmake --build "${{github.workspace}}/build/Win64" --config ${{env.Configuration}}
+# -DOPENAL_INCLUDE_DIR="openal-soft/include/AL" -DOPENAL_LIBRARY="openal-soft/build/${{env.Configuration}}/OpenAL32.lib"
 
     - name: Collect binaries
       run: |
