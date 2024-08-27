@@ -51,9 +51,6 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         job_name: "${{matrix.DSOALCommitHash}}"
-        
-    - name: Output our action
-      run: echo ${{steps.JobID.outputs.job_id}} - ${{steps.JobID.outputs.html_url}}
 
     - name: Clone DSOAL
       run: |
@@ -141,5 +138,5 @@ jobs:
       run: |
         gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{env.DSOALCommitCount}} - ${{env.DSOALCommitTitle}}" --notes "DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} ${{env.DSOALBranch}} - ${{env.DSOALCommitTitle}} [${{env.DSOALCommitDateTimeZone}}]
         OpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} - ${{env.OpenALSoftCommitTitle}} [${{env.OpenALSoftCommitDateTimeZone}}]
-        Build: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}/job/${{env.JobID}}"
+        Build log: ${{steps.JobID.outputs.html_url}}"
         gh release upload r${{env.DSOALCommitCount}} ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.7z --clobber
