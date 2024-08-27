@@ -57,6 +57,8 @@ jobs:
 #curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
 
     - run-name: ${{env.DSOALCommitCount}}
+      run: |
+        echo ${{env.DSOALCommitCount}}
 
     - name: Clone OpenAL Soft
       run: |
