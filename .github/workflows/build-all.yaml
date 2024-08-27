@@ -37,7 +37,7 @@ jobs:
   Build:
     needs: setup
     name: ${{matrix.DSOALCommitHash}}
-    runs-on: windows-2019
+    runs-on: windows-2022
     strategy:
       max-parallel: 1
       matrix:
@@ -55,10 +55,6 @@ jobs:
         echo "DSOALCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
 #curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
-
-    - name: ${{env.DSOALCommitCount}}
-      run: |
-        echo ${{env.DSOALCommitCount}}
 
     - name: Clone OpenAL Soft
       run: |
