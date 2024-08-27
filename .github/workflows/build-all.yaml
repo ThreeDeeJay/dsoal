@@ -62,8 +62,6 @@ jobs:
         echo "DSOALCommitDateTimeZone=$(git show -s --date=iso-local --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
-        gh repo set-default ${{env.DSOALRepo}}
-#curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
 
     - name: Clone OpenAL Soft
       run: |
@@ -76,6 +74,13 @@ jobs:
         echo "OpenALSoftCommitDateTimeZone=$(git show -s --date=iso-local --format=%cd)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
+
+    - name: Build fix patch
+      run: |
+        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def -o msvc.def
+        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def -o msvc64.def
+        if (Test-Path "readme.txt") {ren readme.txt README.md}
+#curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
 
     - name: Build OpenAL Soft
       run: |
@@ -110,7 +115,6 @@ jobs:
         copy "${{github.workspace}}/openal-soft/build/Win64/${{env.Configuration}}/soft_oal.dll"                            "${{env.Configuration}}/HRTF/Win64/dsoal-aldrv.dll"
         curl https://raw.githubusercontent.com/${{env.OpenALSoftRepo}}/${{env.OpenALSoftBranch}}/configs/HRTF/alsoft.ini -o "${{env.Configuration}}/HRTF/Win32/alsoft.ini"
         curl https://raw.githubusercontent.com/${{env.OpenALSoftRepo}}/${{env.OpenALSoftBranch}}/configs/HRTF/alsoft.ini -o "${{env.Configuration}}/HRTF/Win64/alsoft.ini"
-        if (Test-Path "readme.txt") {ren readme.txt README.md}
         copy "${{github.workspace}}/README.md"                                                                              "${{env.Configuration}}/Documentation/DSOAL-ReadMe.txt"
         copy "${{github.workspace}}/LICENSE"                                                                                "${{env.Configuration}}/Documentation/DSOAL-License.txt"
         echo "${{env.DSOALRepo}}" >>                                                                                        "${{env.Configuration}}/Documentation/DSOAL-Version.txt"
