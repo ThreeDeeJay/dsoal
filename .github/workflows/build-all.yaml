@@ -28,8 +28,9 @@ jobs:
       - id: matrix
         run: |
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
-          #git reset --hard 52224b17832fda41d02153cf8f56d27cd94bf79a
-          git reset --hard 98584ab11d231d36488bc055bdeb19b607706bc6
+          #r444 git reset --hard 52224b17832fda41d02153cf8f56d27cd94bf79a
+          #r1 git reset --hard 98584ab11d231d36488bc055bdeb19b607706bc6
+          r412 git reset --hard 2f8b6b8fada76e57ab9479d618acd287305327d4
           git log --max-count=50 --format="%h %d"
           echo "DSOALCommitHash=[\"$(git log --max-count=50 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
@@ -78,13 +79,14 @@ jobs:
 
     - name: Build fix patch
       run: |
+        curl https://github.com/${{env.DSOALRepo}}/commit/2f8b6b8fada76e57ab9479d618acd287305327d4.patch | git apply -v --index
 #curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/CMakeLists.txt
 #curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def
 #curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def
 #curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/mingw.def
 #curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/voiceman.c
 #curl https://github.com/${{env.DSOALRepo}}/commit/2f8b6b8fada76e57ab9479d618acd287305327d4.patch | git apply -v --index
-#curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
+#curl https://github.com/${{env.DSOALRepo}}/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
 
     - name: Build OpenAL Soft
       run: |
