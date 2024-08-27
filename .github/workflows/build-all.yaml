@@ -129,5 +129,7 @@ jobs:
 
     - name: Release
       run: |
-        gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} '${{env.DSOALCommitTitle}}' [${{env.DSOALCommitDateTimeZone}}]" --notes "DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} ${{env.DSOALBranch}} '${{env.DSOALCommitTitle}}'\nOpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} '${{env.OpenALSoftCommitTitle}}'\n[${{env.DSOALCommitDateTimeZone}}]"
+        gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{env.DSOALCommitCount}} '${{env.DSOALCommitTitle}}'" --notes "DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} ${{env.DSOALBranch}} '${{env.DSOALCommitTitle}}'
+        OpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} '${{env.OpenALSoftCommitTitle}}'
+        [${{env.DSOALCommitDateTimeZone}}]"
         gh release upload r${{env.DSOALCommitCount}} ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.zip --clobber
