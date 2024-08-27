@@ -32,8 +32,8 @@ jobs:
         run: |
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
           git reset --hard 52224b17832fda41d02153cf8f56d27cd94bf79a
-          git log --max-count=5 --format="%h %d"
-          echo "DSOALCommitHash=[\"$(git log --max-count=4 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
+          git log --max-count=6 --format="%h %d"
+          echo "DSOALCommitHash=[\"$(git log --max-count=5 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{ steps.matrix.outputs.DSOALCommitHash }}
 
@@ -63,7 +63,7 @@ jobs:
       run: |
         git clone --branch ${{env.OpenALSoftBranch}} https://github.com/${{env.OpenALSoftRepo}}.git
         cd "openal-soft"
-        git reset --hard $(git rev-list --before=${{env.DSOALCommitDate}} HEAD --max-count=1)
+        git reset --hard $(git rev-list --before="${{env.DSOALCommitDateTimeZone}}" HEAD --max-count=1)
         echo "OpenALSoftCommitHash=$(git rev-parse HEAD)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitHashShort=$(git rev-parse --short=8 HEAD)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitTitle=$(git show --pretty=format:%s -s HEAD)" >> $env:GITHUB_ENV
@@ -125,11 +125,11 @@ jobs:
 
     - name: Compress artifacts
       run: |
-        7z a ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.zip ./${{env.Configuration}}/* -mx=9
+        7z a ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.7z ./${{env.Configuration}}/* -mx=9 -m1=LZMA2:d=1024m -m0=BCJ2
 
     - name: Release
       run: |
-        gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{env.DSOALCommitCount}} '${{env.DSOALCommitTitle}}'" --notes "DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} ${{env.DSOALBranch}} '${{env.DSOALCommitTitle}}'
-        OpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} '${{env.OpenALSoftCommitTitle}}'
+        gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{env.DSOALCommitCount}} - ${{env.DSOALCommitTitle}}" --notes "DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} ${{env.DSOALBranch}} - ${{env.DSOALCommitTitle}}
+        OpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} - ${{env.OpenALSoftCommitTitle}}
         [${{env.DSOALCommitDateTimeZone}}]"
-        gh release upload r${{env.DSOALCommitCount}} ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.zip#DSOAL.zip --clobber
+        gh release upload r${{env.DSOALCommitCount}} ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.7z#DSOAL.7z --clobber
