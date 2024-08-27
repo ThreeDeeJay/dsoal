@@ -37,7 +37,7 @@ jobs:
   Build:
     needs: setup
     name: ${{matrix.DSOALCommitHash}}
-    runs-on: windows-2019
+    runs-on: windows-2022
     strategy:
       max-parallel: 2
       fail-fast: false
@@ -102,6 +102,7 @@ jobs:
         copy "${{github.workspace}}/openal-soft/build/Win64/${{env.Configuration}}/soft_oal.dll"                            "${{env.Configuration}}/HRTF/Win64/dsoal-aldrv.dll"
         curl https://raw.githubusercontent.com/${{env.OpenALSoftRepo}}/${{env.OpenALSoftBranch}}/configs/HRTF/alsoft.ini -o "${{env.Configuration}}/HRTF/Win32/alsoft.ini"
         curl https://raw.githubusercontent.com/${{env.OpenALSoftRepo}}/${{env.OpenALSoftBranch}}/configs/HRTF/alsoft.ini -o "${{env.Configuration}}/HRTF/Win64/alsoft.ini"
+        rename "${{github.workspace}}/readme.txt"                                                                           "README.md"
         copy "${{github.workspace}}/README.md"                                                                              "${{env.Configuration}}/Documentation/DSOAL-ReadMe.txt"
         copy "${{github.workspace}}/LICENSE"                                                                                "${{env.Configuration}}/Documentation/DSOAL-License.txt"
         echo "${{env.DSOALRepo}}" >>                                                                                        "${{env.Configuration}}/Documentation/DSOAL-Version.txt"
