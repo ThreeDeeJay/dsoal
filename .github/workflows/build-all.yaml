@@ -129,5 +129,6 @@ jobs:
     - name: Release
       run: |
         gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{env.DSOALCommitCount}} - ${{env.DSOALCommitTitle}}" --notes "DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} ${{env.DSOALBranch}} - ${{env.DSOALCommitTitle}} [${{env.DSOALCommitDateTimeZone}}]
-        OpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} - ${{env.OpenALSoftCommitTitle}} [${{env.OpenALSoftCommitDateTimeZone}}]"
+        OpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} - ${{env.OpenALSoftCommitTitle}} [${{env.OpenALSoftCommitDateTimeZone}}]
+        ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}"
         gh release upload r${{env.DSOALCommitCount}} ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.7z --clobber
