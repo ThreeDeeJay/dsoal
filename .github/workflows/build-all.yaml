@@ -1,9 +1,5 @@
 name: Build all
 
-permissions:
-  contents: write
-  actions: write
-
 on:
   push:
     branches:
@@ -22,7 +18,7 @@ env:
   DSOALBranch: ${{github.ref_name}}
   OpenALSoftRepo: kcat/openal-soft
   OpenALSoftBranch: master
-  GH_TOKEN: ${{ github.token }}
+  GH_TOKEN: ${{ secrets.TOKEN }}
   GH_DEBUG: api
 
 jobs:
@@ -132,7 +128,7 @@ jobs:
 
     - name: Release
       run: |
-        gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}}
+        gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} 
 
     - name: Upload
       run: |
