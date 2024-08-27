@@ -77,11 +77,10 @@ jobs:
 
     - name: Build DSOAL
       run: |
-        cmake -B "${{github.workspace}}/build/Win32" -A Win32
+        cmake -B "${{github.workspace}}/build/Win32" -A Win32 -DOPENAL_INCLUDE_DIR="openal-soft/include/AL" -DOPENAL_LIBRARY="openal-soft/build/${{env.Configuration}}/OpenAL32.lib"
         cmake --build "${{github.workspace}}/build/Win32" --config ${{env.Configuration}}
-        cmake -B "${{github.workspace}}/build/Win64" -A x64
+        cmake -B "${{github.workspace}}/build/Win64" -A x64 -DOPENAL_INCLUDE_DIR="openal-soft/include/AL" -DOPENAL_LIBRARY="openal-soft/build/${{env.Configuration}}/OpenAL32.lib"
         cmake --build "${{github.workspace}}/build/Win64" --config ${{env.Configuration}}
-# -DOPENAL_INCLUDE_DIR="openal-soft/include/AL" -DOPENAL_LIBRARY="openal-soft/build/${{env.Configuration}}/OpenAL32.lib"
 
     - name: Collect binaries
       run: |
