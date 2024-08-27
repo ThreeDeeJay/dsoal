@@ -44,6 +44,16 @@ jobs:
       matrix:
         DSOALCommitHash: ${{fromJSON(needs.setup.outputs.matrix)}}
     steps:
+        
+    - name: Get job info
+      id: JobID
+      uses: daleyjem/gh-job-id@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        job_name: "${{matrix.DSOALCommitHash}}"
+        
+    - name: Output our action
+      run: echo ${{steps.JobID.outputs.job_id}} - ${{steps.JobID.outputs.html_url}}
 
     - name: Clone DSOAL
       run: |
@@ -56,7 +66,6 @@ jobs:
         echo "DSOALCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
         gh repo set-default ${{env.DSOALRepo}}
-        echo "JobID=$(gh run view ${{ github.run_id }} --json jobs | jq -r '.jobs[] | select(.name == "${{ github.job }}") | .databaseId')" >> $env:GITHUB_ENV
 #curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
 
     - name: Clone OpenAL Soft
