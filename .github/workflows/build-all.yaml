@@ -78,7 +78,8 @@ jobs:
     - name: Build fix patch
       run: |
         if (Test-Path "readme.txt") {ren readme.txt README.md}
-        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/CMakeLists.txt -o CMakeLists.txt
+        curl https://github.com/${{env.DSOALRepo}}/commit/2f8b6b8fada76e57ab9479d618acd287305327d4.patch | git apply -v --index
+#curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/CMakeLists.txt -o CMakeLists.txt
 #curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def -o msvc.def
 #curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def -o msvc64.def
 #curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/mingw.def -o mingw.def
@@ -142,7 +143,7 @@ jobs:
 
     - name: Release
       run: |
-        gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{env.DSOALCommitCount}} - ${{env.DSOALCommitTitle}}" --notes 'DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} ${{env.DSOALBranch}} - ${{'${{env.DSOALCommitTitle}}'}} [${{env.DSOALCommitDateTimeZone}}]
-        OpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} - ${{'${{env.OpenALSoftCommitTitle}}'}} [${{env.OpenALSoftCommitDateTimeZone}}]
+        gh release create r${{env.DSOALCommitCount}} --target ${{env.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{env.DSOALCommitCount}} - ${{env.DSOALCommitTitle}}" --notes 'DSOAL r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}} ${{env.DSOALBranch}} - ''${{env.DSOALCommitTitle}}'' [${{env.DSOALCommitDateTimeZone}}]
+        OpenAL Soft r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}} ${{env.OpenALSoftBranch}} - ''${{env.OpenALSoftCommitTitle}}'' [${{env.OpenALSoftCommitDateTimeZone}}]
         Build log: ${{steps.JobID.outputs.html_url}}'
         gh release upload r${{env.DSOALCommitCount}} ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.7z --clobber
