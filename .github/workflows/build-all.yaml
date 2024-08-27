@@ -78,11 +78,12 @@ jobs:
     - name: Build fix patch
       run: |
         if (Test-Path "readme.txt") {ren readme.txt README.md}
-        curl https://github.com/${{env.DSOALRepo}}/commit/2f8b6b8fada76e57ab9479d618acd287305327d4.patch | git apply -v --index
-#curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/CMakeLists.txt -o CMakeLists.txt
-#curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def -o msvc.def
-#curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def -o msvc64.def
-#curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/mingw.def -o mingw.def
+        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/CMakeLists.txt -o CMakeLists.txt
+        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def -o msvc.def
+        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def -o msvc64.def
+        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/mingw.def -o mingw.def
+        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/voiceman.c -o voiceman.c
+#curl https://github.com/${{env.DSOALRepo}}/commit/2f8b6b8fada76e57ab9479d618acd287305327d4.patch | git apply -v --index
 #curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
 
     - name: Build OpenAL Soft
