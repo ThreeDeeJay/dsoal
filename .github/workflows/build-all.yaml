@@ -12,16 +12,13 @@ on:
 #  - cron: '0 0 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 env:
   Configuration: Release
-  DSOALRepo: ${{github.repository}}
-  DSOALBranch: ${{github.ref_name}}
+  DSOALRepo: kcat/dsoal
+  DSOALBranch: master
   OpenALSoftRepo: kcat/openal-soft
   OpenALSoftBranch: master
-  GH_TOKEN: ${{ secrets.TOKEN }}
+  GH_TOKEN: ${{ secrets.TOKEN }} #Releases require a Personal Access Token with read+write permissions for Contents and Workflows passed to the workflow as a secret variable https://github.com/cli/cli/issues/9514
 
 jobs:
 
@@ -33,7 +30,7 @@ jobs:
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
           git reset --hard 52224b17832fda41d02153cf8f56d27cd94bf79a
           git log --max-count=6 --format="%h %d"
-          echo "DSOALCommitHash=[\"$(git log --max-count=7 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
+          echo "DSOALCommitHash=[\"$(git log --max-count=8 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{ steps.matrix.outputs.DSOALCommitHash }}
 
@@ -125,7 +122,7 @@ jobs:
 
     - name: Compress artifacts
       run: |
-        7z a -t7z -mx=9 -m1=LZMA2:d=1024m -m0=BCJ2 ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.7z ./${{env.Configuration}}/*
+        7z a -t7z -ms=on -mx=9 -m1=LZMA2:d=1024m -m0=BCJ2 ${{env.Configuration}}/DSOAL_r${{env.DSOALCommitCount}}.7z ./${{env.Configuration}}/*
 
     - name: Release
       run: |
