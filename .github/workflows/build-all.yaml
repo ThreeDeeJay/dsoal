@@ -78,10 +78,10 @@ jobs:
     - name: Build fix patch
       run: |
         if (Test-Path "readme.txt") {ren readme.txt README.md}
-        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def -o msvc.def
-        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def -o msvc64.def
-        curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/mingw.def -o mingw.def
         curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/CMakeLists.txt -o CMakeLists.txt
+#curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def -o msvc.def
+#curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def -o msvc64.def
+#curl https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/mingw.def -o mingw.def
 #curl https://github.com/kcat/dsoal/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index
 
     - name: Build OpenAL Soft
