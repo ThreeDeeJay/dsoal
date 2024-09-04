@@ -31,8 +31,8 @@ jobs:
           #r444 git reset --hard 52224b17832fda41d02153cf8f56d27cd94bf79a
           #r1 git reset --hard 98584ab11d231d36488bc055bdeb19b607706bc6
           git reset --hard 2f8b6b8fada76e57ab9479d618acd287305327d4 #r412
-          git log --max-count=20 --format="%h %d"
-          echo "DSOALCommitHash=[\"$(git log --max-count=20 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
+          git log --max-count=10 --format="%h %d"
+          echo "DSOALCommitHash=[\"$(git log --max-count=10 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{steps.matrix.outputs.DSOALCommitHash}}
 
@@ -60,7 +60,7 @@ jobs:
         git reset --hard ${{matrix.DSOALCommitHash}}
         echo "DSOALCommitHash=$(git rev-parse HEAD)" >> $env:GITHUB_ENV
         echo "DSOALCommitHashShort=$(git rev-parse --short=8 HEAD)" >> $env:GITHUB_ENV
-        echo "DSOALCommitTitle=$(git show --pretty=format:%s -s HEAD | sed 's/./\\&/g')" >> $env:GITHUB_ENV
+        echo "DSOALCommitTitle=$(git show --pretty=format:%s -s HEAD | sed 's/[\'\"\']//g')" >> $env:GITHUB_ENV #escape everything 's/./\\&/g'
         echo "DSOALCommitDateTimeZone=$(git show -s --date=iso-local --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitDate=$(git show -s --date  =iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
@@ -72,7 +72,7 @@ jobs:
         git reset --hard $(git rev-list --before="${{env.DSOALCommitDateTimeZone}}" HEAD --max-count=1)
         echo "OpenALSoftCommitHash=$(git rev-parse HEAD)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitHashShort=$(git rev-parse --short=8 HEAD)" >> $env:GITHUB_ENV
-        echo "OpenALSoftCommitTitle=$(git show --pretty=format:%s -s HEAD | sed 's/./\\&/g')" >> $env:GITHUB_ENV
+        echo "OpenALSoftCommitTitle=$(git show --pretty=format:%s -s HEAD | sed 's/[\'\"\']//g')" >> $env:GITHUB_ENV #escape everything 's/./\\&/g'
         echo "OpenALSoftCommitDateTimeZone=$(git show -s --date=iso-local --format=%cd)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
