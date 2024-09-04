@@ -60,7 +60,7 @@ jobs:
         git reset --hard ${{matrix.DSOALCommitHash}}
         echo "DSOALCommitHash=$(git rev-parse HEAD)" >> $env:GITHUB_ENV
         echo "DSOALCommitHashShort=$(git rev-parse --short=8 HEAD)" >> $env:GITHUB_ENV
-        echo "DSOALCommitTitle=$(git show --pretty=format:%s -s HEAD | sed \"s/\'//g\")" >> $env:GITHUB_ENV #escape everything 's/./\\&/g'
+        echo "DSOALCommitTitle=$(git show --pretty=format:%s -s HEAD | sed \"s/'\|\"\|\"\|'/\\\&/\")" >> $env:GITHUB_ENV #escape everything 's/./\\&/g'
         echo "DSOALCommitDateTimeZone=$(git show -s --date=iso-local --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitDate=$(git show -s --date  =iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
@@ -72,7 +72,7 @@ jobs:
         git reset --hard $(git rev-list --before="${{env.DSOALCommitDateTimeZone}}" HEAD --max-count=1)
         echo "OpenALSoftCommitHash=$(git rev-parse HEAD)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitHashShort=$(git rev-parse --short=8 HEAD)" >> $env:GITHUB_ENV
-        echo "OpenALSoftCommitTitle=$(git show --pretty=format:%s -s HEAD | sed \"s/\'//g\")" >> $env:GITHUB_ENV #escape everything 's/./\\&/g'
+        echo "OpenALSoftCommitTitle=$(git show --pretty=format:%s -s HEAD | sed \"s/'\|\"\|\"\|'/\\\&/\")" >> $env:GITHUB_ENV #escape everything 's/./\\&/g'
         echo "OpenALSoftCommitDateTimeZone=$(git show -s --date=iso-local --format=%cd)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "OpenALSoftCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
