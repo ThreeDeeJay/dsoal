@@ -91,9 +91,9 @@ jobs:
 
     - name: Build OpenAL Soft
       run: |
-        cmake -B "${{github.workspace}}/openal-soft/build/Win32" -DCMAKE_Configuration=${{env.Configuration}} -A Win32 -DALSOFT_BUILD_ROUTER=ON -DALSOFT_REQUIRE_WINMM=ON -DALSOFT_REQUIRE_DSOUND=ON -DALSOFT_REQUIRE_WASAPI=ON "${{github.workspace}}/openal-soft"
+        cmake -B "${{github.workspace}}/openal-soft/build/Win32" -DCMAKE_Configuration=${{env.Configuration}} -A Win32 -DALSOFT_TESTS=ON -DALSOFT_BUILD_ROUTER=ON -DALSOFT_REQUIRE_WINMM=ON -DALSOFT_REQUIRE_DSOUND=ON -DALSOFT_REQUIRE_WASAPI=ON "${{github.workspace}}/openal-soft"
         cmake --build "${{github.workspace}}/openal-soft/build/Win32" --config ${{env.Configuration}}
-        cmake -B "${{github.workspace}}/openal-soft/build/Win64" -DCMAKE_Configuration=${{env.Configuration}} -A x64 -DALSOFT_BUILD_ROUTER=ON -DALSOFT_REQUIRE_WINMM=ON -DALSOFT_REQUIRE_DSOUND=ON -DALSOFT_REQUIRE_WASAPI=ON "${{github.workspace}}/openal-soft"
+        cmake -B "${{github.workspace}}/openal-soft/build/Win64" -DCMAKE_Configuration=${{env.Configuration}} -A x64 -DALSOFT_TESTS=ON -DALSOFT_BUILD_ROUTER=ON -DALSOFT_REQUIRE_WINMM=ON -DALSOFT_REQUIRE_DSOUND=ON -DALSOFT_REQUIRE_WASAPI=ON "${{github.workspace}}/openal-soft"
         cmake --build "${{github.workspace}}/openal-soft/build/Win64" --config ${{env.Configuration}}
 
     - name: Build DSOAL
