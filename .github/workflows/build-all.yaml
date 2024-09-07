@@ -13,12 +13,12 @@ on:
   workflow_dispatch:
 
 env:
-  Configuration: Release
-  DSOALRepo: ${{github.repository}}
-  DSOALBranch: ${{github.ref_name}}
-  OpenALSoftRepo: kcat/openal-soft
-  OpenALSoftBranch: master
-  GH_TOKEN: ${{ secrets.TOKEN }} #Releases require a Personal Access Token with read+write permissions for Contents and Workflows passed to the workflow as a secret variable https://github.com/cli/cli/issues/9514
+  Configuration: "Release"
+  DSOALRepo: "${{github.repository}}"
+  DSOALBranch: "c++-rewrite"
+  OpenALSoftRepo: "kcat/openal-soft"
+  OpenALSoftBranch: "master"
+  GH_TOKEN: "${{secrets.TOKEN}}" #Releases require a Personal Access Token with read+write permissions for Contents and Workflows passed to the workflow as a secret variable https://github.com/cli/cli/issues/9514
 
 jobs:
 
@@ -28,9 +28,10 @@ jobs:
       - id: matrix
         run: |
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
-          #r444 git reset --hard 52224b17832fda41d02153cf8f56d27cd94bf79a
-          #r1 git reset --hard 98584ab11d231d36488bc055bdeb19b607706bc6
-          git reset --hard 2f8b6b8fada76e57ab9479d618acd287305327d4 #r412
+          #Start at r444 git reset --hard 52224b17832fda41d02153cf8f56d27cd94bf79a
+          #Start at r1   git reset --hard 98584ab11d231d36488bc055bdeb19b607706bc6
+          #Start at r412 git reset --hard 2f8b6b8fada76e57ab9479d618acd287305327d4 
+          git reset --hard afe57915ed2ed09d37cd2c5952ce34d827e90ab2 #Start at r556
           git log --max-count=10 --format="%h %d"
           echo "DSOALCommitHash=[\"$(git log --max-count=10 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
