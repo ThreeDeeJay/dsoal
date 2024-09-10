@@ -15,7 +15,7 @@ on:
 env:
   Configuration: "Release"
   DSOALRepo: "${{github.repository}}"
-  DSOALBranch: "c++-rewrite"
+  DSOALBranch: "master"
   DSOALCommitStart: "360dcfc99aa039728181c8d403abcc28dd4706f2" #r399 r556=afe57915ed2ed09d37cd2c5952ce34d827e90ab2 r1=98584ab11d231d36488bc055bdeb19b607706bc6 r412=2f8b6b8fada76e57ab9479d618acd287305327d4 r444=52224b17832fda41d02153cf8f56d27cd94bf79a 
   OpenALSoftRepo: "kcat/openal-soft"
   OpenALSoftBranch: "master"
