@@ -29,7 +29,7 @@ jobs:
       - id: matrix
         run: |
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
-          #Start at r444 git reset --hard ${{env.DSOALCommitStart}}
+          git reset --hard ${{env.DSOALCommitStart}}
           git log --max-count=100 --format="%h %d"
           echo "DSOALCommitHash=[\"$(git log --max-count=100 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
