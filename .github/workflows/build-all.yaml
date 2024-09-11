@@ -78,6 +78,7 @@ jobs:
 
     - name: Build fix patch
       run: |
+        if (${{env.DSOALCommitCount}} -lt 397) {curl https://github.com/${{env.DSOALRepo}}/commit/bf3383f473af5a84cd9165e75f800c9ad08b0be2.patch | git apply -v --index}
         if (${{env.DSOALCommitCount}} -lt 397) {curl https://github.com/${{env.DSOALRepo}}/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index}
         if (${{env.DSOALCommitCount}} -lt 397) {curl https://github.com/${{env.DSOALRepo}}/commit/adf57e5dbe1c17009c451e34f8a997856f541049.patch | git apply -v --index}
         if (${{env.DSOALCommitCount}} -lt 397) {curl https://github.com/${{env.DSOALRepo}}/commit/adf57e5dbe1c17009c451e34f8a997856f541049.patch | git apply -v --index}
