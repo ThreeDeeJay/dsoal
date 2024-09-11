@@ -16,7 +16,7 @@ env:
   Configuration: "Release"
   DSOALRepo: "${{github.repository}}"
   DSOALBranch: "master"
-  DSOALCommitStart: "360dcfc99aa039728181c8d403abcc28dd4706f2" #r399 r556=afe57915ed2ed09d37cd2c5952ce34d827e90ab2 r1=98584ab11d231d36488bc055bdeb19b607706bc6 r412=2f8b6b8fada76e57ab9479d618acd287305327d4 r444=52224b17832fda41d02153cf8f56d27cd94bf79a 
+  DSOALCommitStart: "b7c076e57648bb5da32ee7191501ee1beb48f2ed" #r397 r399=360dcfc99aa039728181c8d403abcc28dd4706f2 r556=afe57915ed2ed09d37cd2c5952ce34d827e90ab2 r1=98584ab11d231d36488bc055bdeb19b607706bc6 r412=2f8b6b8fada76e57ab9479d618acd287305327d4 r444=52224b17832fda41d02153cf8f56d27cd94bf79a 
   OpenALSoftRepo: "kcat/openal-soft"
   OpenALSoftBranch: "master"
   GH_TOKEN: "${{secrets.TOKEN}}" #Releases require a Personal Access Token with read+write permissions for Contents and Workflows passed to the workflow as a secret variable https://github.com/cli/cli/issues/9514
@@ -30,8 +30,8 @@ jobs:
         run: |
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
           git reset --hard ${{env.DSOALCommitStart}}
-          git log --max-count=1 --format="%h %d"
-          echo "DSOALCommitHash=[\"$(git log --max-count=1 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
+          git log --max-count=5 --format="%h %d"
+          echo "DSOALCommitHash=[\"$(git log --max-count=5 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{steps.matrix.outputs.DSOALCommitHash}}
 
@@ -40,7 +40,7 @@ jobs:
     name: ${{matrix.DSOALCommitHash}}
     runs-on: windows-2019
     strategy:
-      max-parallel: 0
+      max-parallel: 2
       fail-fast: false
       matrix:
         DSOALCommitHash: ${{fromJSON(needs.setup.outputs.matrix)}}
@@ -78,6 +78,7 @@ jobs:
 
     - name: Build fix patch
       run: |
+        if (${{env.DSOALCommitCount}} -lt 397) {curl https://github.com/${{env.DSOALRepo}}/commit/b7c076e57648bb5da32ee7191501ee1beb48f2ed.patch | git apply -v --index}
         if (${{env.DSOALCommitCount}} -lt 398) {curl https://github.com/${{env.DSOALRepo}}/commit/0f8f05b4877e95b92fc2ba93c0204ee70ce26ad0.patch | git apply -v --index}
         if (${{env.DSOALCommitCount}} -lt 399) {curl https://github.com/${{env.DSOALRepo}}/commit/360dcfc99aa039728181c8d403abcc28dd4706f2.patch | git apply -v --index}
         if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/79b8fd96e96708516b6f964548e98cb1913e64f4.patch | git apply -v --index}
