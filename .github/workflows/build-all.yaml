@@ -30,8 +30,8 @@ jobs:
         run: |
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
           git reset --hard ${{env.DSOALCommitStart}}
-          git log --max-count=5 --format="%h %d"
-          echo "DSOALCommitHash=[\"$(git log --max-count=5 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
+          git log --max-count=3 --format="%h %d"
+          echo "DSOALCommitHash=[\"$(git log --max-count=3 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{steps.matrix.outputs.DSOALCommitHash}}
 
@@ -78,23 +78,33 @@ jobs:
 
     - name: Build fix patch
       run: |
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/173674c1dc63d61e3e000604dc5519b8c81e9d7c.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/bf3383f473af5a84cd9165e75f800c9ad08b0be2.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/adf57e5dbe1c17009c451e34f8a997856f541049.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/adf57e5dbe1c17009c451e34f8a997856f541049.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/09a2903b02cf929ee9a84b5c79aff667e4537c2b.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/8248f297b1ad19eacddd9de15363f69188c4ede3.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/bdf5299ab46264805049a4884a9afb5797057a41.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/b7c076e57648bb5da32ee7191501ee1beb48f2ed.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/0f8f05b4877e95b92fc2ba93c0204ee70ce26ad0.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/360dcfc99aa039728181c8d403abcc28dd4706f2.patch | git apply -v --index} #r4
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/9749d085ea33325dda8a44ee0dd72c552a558ef1.patch | git apply -v --index} #r409
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/1364a27ce0fdc8679b10e1ce2a5db404c25ff40e.patch | git apply -v --index} #r410
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/da5e4861eb7cc1d3a2703520a202b95ce52e577d.patch | git apply -v --index} #r411
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/79b8fd96e96708516b6f964548e98cb1913e64f4.patch | git apply -v --index} #r413
         if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/2f8b6b8fada76e57ab9479d618acd287305327d4.patch | git apply -v --index} #r412
-        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/307fd857ea42101b124ecb7d899ffc32bf79c083.patch | git apply -v --index} #r414
+
+
+
+#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/CMakeLists.txt
+#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def
+#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def
+#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/mingw.def
+#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/voiceman.c
+      
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/173674c1dc63d61e3e000604dc5519b8c81e9d7c.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/bf3383f473af5a84cd9165e75f800c9ad08b0be2.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/1a412b93c158819af04a8fc556d37f34317820f1.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/adf57e5dbe1c17009c451e34f8a997856f541049.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/adf57e5dbe1c17009c451e34f8a997856f541049.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/09a2903b02cf929ee9a84b5c79aff667e4537c2b.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/8248f297b1ad19eacddd9de15363f69188c4ede3.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/bdf5299ab46264805049a4884a9afb5797057a41.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/b7c076e57648bb5da32ee7191501ee1beb48f2ed.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/0f8f05b4877e95b92fc2ba93c0204ee70ce26ad0.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/360dcfc99aa039728181c8d403abcc28dd4706f2.patch | git apply -v --index} #r4
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/9749d085ea33325dda8a44ee0dd72c552a558ef1.patch | git apply -v --index} #r409
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/1364a27ce0fdc8679b10e1ce2a5db404c25ff40e.patch | git apply -v --index} #r410
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/da5e4861eb7cc1d3a2703520a202b95ce52e577d.patch | git apply -v --index} #r411
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/79b8fd96e96708516b6f964548e98cb1913e64f4.patch | git apply -v --index} #r413
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/2f8b6b8fada76e57ab9479d618acd287305327d4.patch | git apply -v --index} #r412
+#        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/307fd857ea42101b124ecb7d899ffc32bf79c083.patch | git apply -v --index} #r414
 
 
 #        if (${{env.DSOALCommitCount}} -lt 380) {curl https://github.com/${{env.DSOALRepo}}/commit/173674c1dc63d61e3e000604dc5519b8c81e9d7c.patch | git apply -v --index}
@@ -113,11 +123,6 @@ jobs:
 #        if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/307fd857ea42101b124ecb7d899ffc32bf79c083.patch | git apply -v --index}
 
         
-#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/CMakeLists.txt
-#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def
-#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def
-#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/mingw.def
-#curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/voiceman.c
 
     - name: Build OpenAL Soft
       run: |
