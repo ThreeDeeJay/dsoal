@@ -81,7 +81,6 @@ jobs:
         if (${{env.DSOALCommitCount}} -lt 412) {curl https://github.com/${{env.DSOALRepo}}/commit/2f8b6b8fada76e57ab9479d618acd287305327d4.patch | git apply -v --index} #r412
 
 
-
 #curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/CMakeLists.txt
 #curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc.def
 #curl -O -J https://raw.githubusercontent.com/${{env.DSOALRepo}}/${{env.DSOALBranch}}/msvc64.def
