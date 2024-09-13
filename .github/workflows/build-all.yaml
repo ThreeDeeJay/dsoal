@@ -40,7 +40,7 @@ jobs:
     name: ${{matrix.DSOALCommitHash}}
     runs-on: windows-2019
     strategy:
-      max-parallel: 1
+      max-parallel: 0
       fail-fast: true
       matrix:
         DSOALCommitHash: ${{fromJSON(needs.setup.outputs.matrix)}}
