@@ -61,11 +61,9 @@ jobs:
         echo "DSOALCommitHashShort=$(git rev-parse --short=8 HEAD)" >> $env:GITHUB_ENV
         echo "DSOALCommitTitle=$(git show --pretty=format:%s -s HEAD)" >> $env:GITHUB_ENV #escape everything 's/./\\&/g' WIP: | tr -d \'\\\\'\' \'\\\\'\'
         echo "DSOALCommitDateTimeZone=$(git show -s --date=iso-local --format=%cd)" >> $env:GITHUB_ENV
-        echo "DSOALCommitDate=$(git show -s --date  =iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
+        echo "DSOALCommitDate=$(git show -s --date=iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
-        echo "DateTimeZone=$(date)" >> $env:GITHUB_ENV
-        date
-        date +'%Y-%m-%d'
+        echo "DateTimeZone=$(date +"%Y-%m-%d %H:%M:%S %z")" >> $env:GITHUB_ENV
 
     - name: Clone OpenAL Soft
       run: |
