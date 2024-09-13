@@ -30,8 +30,8 @@ jobs:
         run: |
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
           git reset --hard ${{env.DSOALCommitStart}}
-          git log --max-count=3 --format="%h %d"
-          echo "DSOALCommitHash=[\"$(git log --max-count=3 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
+          git log --max-count=10 --format="%h %d"
+          echo "DSOALCommitHash=[\"$(git log --max-count=10 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{steps.matrix.outputs.DSOALCommitHash}}
 
@@ -63,6 +63,9 @@ jobs:
         echo "DSOALCommitDateTimeZone=$(git show -s --date=iso-local --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitDate=$(git show -s --date  =iso-local --date=format:'%Y-%m-%d' --format=%cd)" >> $env:GITHUB_ENV
         echo "DSOALCommitCount=$(git rev-list --count HEAD)" >> $env:GITHUB_ENV
+        echo "DateTimeZone=$(date)" >> $env:GITHUB_ENV
+        date
+        date +'%Y-%m-%d'
 
     - name: Clone OpenAL Soft
       run: |
@@ -195,6 +198,7 @@ jobs:
         echo "${{env.DSOALCommitHash}}" >>                                                                                  "${{env.Configuration}}/Documentation/DSOAL-Version.txt"
         echo "${{env.DSOALCommitTitle}}" >>                                                                                 "${{env.Configuration}}/Documentation/DSOAL-Version.txt"
         echo "${{env.DSOALCommitDateTimeZone}}" >>                                                                          "${{env.Configuration}}/Documentation/DSOAL-Version.txt"
+        echo "Compiled on ${{env.DateTimeZone}}" >>                                                                         "${{env.Configuration}}/Documentation/DSOAL-Version.txt"
         copy "${{github.workspace}}/openal-soft/README.md"                                                                  "${{env.Configuration}}/Documentation/OpenALSoft-ReadMe.txt"
         copy "${{github.workspace}}/openal-soft/COPYING"                                                                    "${{env.Configuration}}/Documentation/OpenALSoft-License.txt"
         curl https://raw.githubusercontent.com/${{env.OpenALSoftRepo}}/${{env.OpenALSoftBranch}}/README.md -o               "${{env.Configuration}}/Documentation/OpenALSoft-ReadMe.txt"
@@ -207,6 +211,7 @@ jobs:
         echo "${{env.OpenALSoftCommitHash}}" >>                                                                             "${{env.Configuration}}/Documentation/OpenALSoft-Version.txt"
         echo "${{env.OpenALSoftCommitTitle}}" >>                                                                            "${{env.Configuration}}/Documentation/OpenALSoft-Version.txt"
         echo "${{env.OpenALSoftCommitDateTimeZone}}" >>                                                                     "${{env.Configuration}}/Documentation/OpenALSoft-Version.txt"
+        echo "Compiled on ${{env.DateTimeZone}}" >>                                                                         "${{env.Configuration}}/Documentation/OpenALSoft-Version.txt"
 
     - name: Compress artifacts
       run: |
