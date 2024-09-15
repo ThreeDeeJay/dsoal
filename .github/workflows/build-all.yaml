@@ -30,8 +30,8 @@ jobs:
         run: |
           git clone --branch ${{env.DSOALBranch}} https://github.com/${{env.DSOALRepo}}.git .
           git reset --hard ${{env.DSOALCommitStart}}
-          git log --max-count=100 --format="%h %d"
-          echo "DSOALCommitHash=[\"$(git log --max-count=100 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
+          git log --max-count=256 --format="%h %d"
+          echo "DSOALCommitHash=[\"$(git log --max-count=256 --format="%h %d" | grep -v 'tag' | awk '{print $1}' | sed ':a;N;$!ba;s/\n/\", \"/g')\"]" >> $GITHUB_OUTPUT
     outputs:
       matrix: ${{steps.matrix.outputs.DSOALCommitHash}}
 
@@ -41,7 +41,7 @@ jobs:
     runs-on: windows-2022
     strategy:
       max-parallel: 1
-      fail-fast: true
+      fail-fast: false
       matrix:
         DSOALCommitHash: ${{fromJSON(needs.setup.outputs.matrix)}}
     steps:
