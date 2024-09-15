@@ -16,7 +16,7 @@ env:
   Configuration: "Release"
   DSOALRepo: "${{github.repository}}"
   DSOALBranch: "master"
-  DSOALCommitStart: "2f8b6b8fada76e57ab9479d618acd287305327d4" #r412 r1=98584ab11d231d36488bc055bdeb19b607706bc6 r380=173674c1dc63d61e3e000604dc5519b8c81e9d7c r397=b7c076e57648bb5da32ee7191501ee1beb48f2ed r399=360dcfc99aa039728181c8d403abcc28dd4706f2 r444=52224b17832fda41d02153cf8f56d27cd94bf79a r556=afe57915ed2ed09d37cd2c5952ce34d827e90ab2  
+  DSOALCommitStart: "afe57915ed2ed09d37cd2c5952ce34d827e90ab2" #r556 r412=2f8b6b8fada76e57ab9479d618acd287305327d4 r1=98584ab11d231d36488bc055bdeb19b607706bc6 r380=173674c1dc63d61e3e000604dc5519b8c81e9d7c r397=b7c076e57648bb5da32ee7191501ee1beb48f2ed r399=360dcfc99aa039728181c8d403abcc28dd4706f2 r444=52224b17832fda41d02153cf8f56d27cd94bf79a 
   OpenALSoftRepo: "kcat/openal-soft"
   OpenALSoftBranch: "master"
   GH_TOKEN: "${{secrets.TOKEN}}" #Releases require a Personal Access Token with read+write permissions for Contents and Workflows passed to the workflow as a secret variable https://github.com/cli/cli/issues/9514
@@ -38,7 +38,7 @@ jobs:
   Build:
     needs: setup
     name: ${{matrix.DSOALCommitHash}}
-    runs-on: windows-2019
+    runs-on: windows-2022
     strategy:
       max-parallel: 1
       fail-fast: true
