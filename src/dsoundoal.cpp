@@ -5,6 +5,7 @@
 #include <functional>
 #include <memory>
 #include <optional>
+#include <string_view>
 
 #include <ks.h>
 #include <ksmedia.h>
@@ -27,6 +28,62 @@ using voidp = void*;
 using cvoidp = const void*;
 
 using SubListAllocator = std::allocator<std::array<Buffer,64>>;
+
+using namespace std::string_view_literals;
+
+constexpr auto CapNames = std::array{
+    "DSBCAPS_PRIMARYBUFFER"sv,      // 0x00000001
+    "DSBCAPS_STATIC"sv,             // 0x00000002
+    "DSBCAPS_LOCHARDWARE"sv,        // 0x00000004
+    "DSBCAPS_LOCSOFTWARE"sv,        // 0x00000008
+    "DSBCAPS_CTRL3D"sv,             // 0x00000010
+    "DSBCAPS_CTRLFREQUENCY"sv,      // 0x00000020
+    "DSBCAPS_CTRLPAN"sv,            // 0x00000040
+    "DSBCAPS_CTRLVOLUME"sv,         // 0x00000080
+    "DSBCAPS_CTRLPOSITIONNOTIFY"sv, // 0x00000100
+    "DSBCAPS_CTRLFX"sv,             // 0x00000200
+    "0x400"sv,                      // 0x00000400
+    "0x800"sv,                      // 0x00000800
+    "0x1000"sv,                     // 0x00001000
+    "0x2000"sv,                     // 0x00002000
+    "DSBCAPS_STICKYFOCUS"sv,        // 0x00004000
+    "DSBCAPS_GLOBALFOCUS"sv,        // 0x00008000
+    "DSBCAPS_GETCURRENTPOSITION2"sv,// 0x00010000
+    "DSBCAPS_MUTE3DATMAXDISTANCE"sv,// 0x00020000
+    "DSBCAPS_LOCDEFER"sv,           // 0x00040000
+};
+
+auto GetDSBCapsString(DWORD flags) -> std::string
+{
+    auto ret = std::string{};
+    ret.reserve(256);
+
+    auto first = true;
+    for(size_t idx{0};idx < CapNames.size();++idx)
+    {
+        const auto flag = DWORD{1} << idx;
+        if(flag > flags)
+            break;
+        if(!(flags&flag))
+            continue;
+        flags &= ~flag;
+
+        if(first)
+            first = false;
+        else
+            ret += " | ";
+        ret += CapNames[idx];
+    }
+
+    if(ret.empty() || flags != 0)
+    {
+        if(!ret.empty())
+            ret += " | ";
+        ret += fmt::format("{:#x}", flags);
+    }
+
+    return ret;
+}
 
 
 template<typename T>
@@ -74,22 +131,22 @@ std::optional<DWORD> GetSpeakerConfig(IMMDevice *device)
     }
 
     const auto phys_speakers = pv.value<ULONG>();
-    pv.clear();
+    auto match_speakers = [phys_speakers](const ULONG speakers) noexcept
+    { return (phys_speakers&speakers) == speakers; };
 
-#define BIT_MATCH(v, b) (((v)&(b)) == (b))
-    if(BIT_MATCH(phys_speakers, KSAUDIO_SPEAKER_7POINT1))
+    if(match_speakers(KSAUDIO_SPEAKER_7POINT1))
         speakerconf = DSSPEAKER_7POINT1;
-    else if(BIT_MATCH(phys_speakers, KSAUDIO_SPEAKER_7POINT1_SURROUND))
+    else if(match_speakers(KSAUDIO_SPEAKER_7POINT1_SURROUND))
         speakerconf = DSSPEAKER_7POINT1_SURROUND;
-    else if(BIT_MATCH(phys_speakers, KSAUDIO_SPEAKER_5POINT1))
+    else if(match_speakers(KSAUDIO_SPEAKER_5POINT1))
         speakerconf = DSSPEAKER_5POINT1_BACK;
-    else if(BIT_MATCH(phys_speakers, KSAUDIO_SPEAKER_5POINT1_SURROUND))
+    else if(match_speakers(KSAUDIO_SPEAKER_5POINT1_SURROUND))
         speakerconf = DSSPEAKER_5POINT1_SURROUND;
-    else if(BIT_MATCH(phys_speakers, KSAUDIO_SPEAKER_QUAD))
+    else if(match_speakers(KSAUDIO_SPEAKER_QUAD))
         speakerconf = DSSPEAKER_QUAD;
-    else if(BIT_MATCH(phys_speakers, KSAUDIO_SPEAKER_STEREO))
+    else if(match_speakers(KSAUDIO_SPEAKER_STEREO))
         speakerconf = DSSPEAKER_COMBINED(DSSPEAKER_STEREO, DSSPEAKER_GEOMETRY_WIDE);
-    else if(BIT_MATCH(phys_speakers, KSAUDIO_SPEAKER_MONO))
+    else if(match_speakers(KSAUDIO_SPEAKER_MONO))
         speakerconf = DSSPEAKER_MONO;
     else
     {
@@ -97,10 +154,10 @@ std::optional<DWORD> GetSpeakerConfig(IMMDevice *device)
             phys_speakers);
         return speakerconf;
     }
-#undef BIT_MATCH
 
     if(DSSPEAKER_CONFIG(speakerconf) == DSSPEAKER_STEREO)
     {
+        pv.clear();
         hr = ps->GetValue(PKEY_AudioEndpoint_FormFactor, pv.get());
         if(FAILED(hr))
             WARN("GetSpeakerConfig IPropertyStore::GetValue(FormFactor) failed: {:08x}",
@@ -312,7 +369,7 @@ BufferSubList::~BufferSubList()
     uint64_t usemask{~mFreeMask};
     while(usemask)
     {
-        auto idx = int{ds::countr_zero(usemask)};
+        auto idx = ds::countr_zero(usemask);
         std::destroy_at(std::to_address(mBuffers->begin() + idx));
         usemask &= ~(1_u64 << idx);
     }
@@ -522,20 +579,20 @@ HRESULT STDMETHODCALLTYPE DSound8OAL::CreateSoundBuffer(const DSBUFFERDESC *buff
     if(bufdesc.dwSize >= sizeof(DSBUFFERDESC))
     {
         TRACE(PREFIX "Requested buffer:\n"
-              "    Size        = {}\n"
-              "    Flags       = 0x{:08x}\n"
-              "    BufferBytes = {}\n"
-              "    3DAlgorithm = {}",
-            bufdesc.dwSize, bufdesc.dwFlags, bufdesc.dwBufferBytes,
+            "    Size        = {}\n"
+            "    Flags       = {}\n"
+            "    BufferBytes = {}\n"
+            "    3DAlgorithm = {}",
+            bufdesc.dwSize, GetDSBCapsString(bufdesc.dwFlags), bufdesc.dwBufferBytes,
             Ds3dalgPrinter{bufdesc.guid3DAlgorithm}.c_str());
     }
     else
     {
         TRACE(PREFIX "Requested buffer:\n"
-              "    Size        = {}\n"
-              "    Flags       = 0x{:08x}\n"
-              "    BufferBytes = {}",
-            bufdesc.dwSize, bufdesc.dwFlags, bufdesc.dwBufferBytes);
+            "    Size        = {}\n"
+            "    Flags       = {}\n"
+            "    BufferBytes = {}",
+            bufdesc.dwSize, GetDSBCapsString(bufdesc.dwFlags), bufdesc.dwBufferBytes);
     }
 
     /* OpenAL doesn't support playing with 3d and panning at same time. */
@@ -549,10 +606,9 @@ HRESULT STDMETHODCALLTYPE DSound8OAL::CreateSoundBuffer(const DSBUFFERDESC *buff
         }
 
         /* DS7 does, though. No idea what it expects to happen. */
-        static int once{0};
-        if(!once)
+        if(static bool once{false}; !once)
         {
-            ++once;
+            once = true;
             FIXME(PREFIX "Buffers with 3D and pan control ignore panning");
         }
     }
