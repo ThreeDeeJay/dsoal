@@ -1,5 +1,5 @@
 name: Untagged build
- 
+
 on:
   push:
     branches:
