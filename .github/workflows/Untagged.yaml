@@ -99,7 +99,7 @@ jobs:
     - name: Upload artifact to GitHub actions
       uses: actions/upload-artifact@v4
       with:
-        name: DSOAL_r${{env.DSOALCommitCount}}@${{env.DSOALCommitHashShort}}+OpenALSoft_r${{env.OpenALSoftCommitCount}}@${{env.OpenALSoftCommitHashShort}}-${{matrix.config.name}}
+        name: DSOAL_r${{env.DSOALCommitCount}}-${{env.DSOALCommitHashShort}}+OpenALSoft_r${{env.OpenALSoftCommitCount}}-${{env.OpenALSoftCommitHashShort}}-${{matrix.config.name}}
         path: DSOAL/
 
     outputs:
@@ -129,8 +129,8 @@ jobs:
 
     - name: Collect binaries
       run: |
-        mv "Release/DSOAL_r${{needs.Build.outputs.DSOALCommitCount}}@${{needs.Build.outputs.DSOALCommitHashShort}}+OpenALSoft_r${{needs.Build.outputs.OpenALSoftCommitCount}}@${{needs.Build.outputs.OpenALSoftCommitHashShort}}-Win32" "Release/Win32"
-        mv "Release/DSOAL_r${{needs.Build.outputs.DSOALCommitCount}}@${{needs.Build.outputs.DSOALCommitHashShort}}+OpenALSoft_r${{needs.Build.outputs.OpenALSoftCommitCount}}@${{needs.Build.outputs.OpenALSoftCommitHashShort}}-Win64" "Release/Win64"
+        mv "Release/DSOAL_r${{needs.Build.outputs.DSOALCommitCount}}-${{needs.Build.outputs.DSOALCommitHashShort}}+OpenALSoft_r${{needs.Build.outputs.OpenALSoftCommitCount}}-${{needs.Build.outputs.OpenALSoftCommitHashShort}}-Win32" "Release/Win32"
+        mv "Release/DSOAL_r${{needs.Build.outputs.DSOALCommitCount}}-${{needs.Build.outputs.DSOALCommitHashShort}}+OpenALSoft_r${{needs.Build.outputs.OpenALSoftCommitCount}}-${{needs.Build.outputs.OpenALSoftCommitHashShort}}-Win64" "Release/Win64"
         mkdir "Release/DSOAL"
         mv "Release/Win32" "Release/DSOAL/Win32"
         mv "Release/Win64" "Release/DSOAL/Win64"
@@ -159,14 +159,14 @@ jobs:
 
     - name: Release - r${{needs.Build.outputs.DSOALCommitCount}}
       run: |
-        gh release create r${{needs.Build.outputs.DSOALCommitCount}} --repo ${{env.DSOALRepo}} --target ${{needs.Build.outputs.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{needs.Build.outputs.DSOALCommitCount}} + OpenAL Soft r${{needs.Build.outputs.OpenALSoftCommitCount}}" --notes "DSOAL r${{needs.Build.outputs.DSOALCommitCount}}@${{needs.Build.outputs.DSOALCommitHashShort}} ${{needs.Build.outputs.DSOALBranch}} - ${{needs.Build.outputs.DSOALCommitTitle}} [${{needs.Build.outputs.DSOALCommitDate}}]
-        OpenAL Soft r${{needs.Build.outputs.OpenALSoftCommitCount}}@${{needs.Build.outputs.OpenALSoftCommitHashShort}} ${{needs.Build.outputs.OpenALSoftBranch}} - ${{needs.Build.outputs.OpenALSoftCommitTitle}} [${{needs.Build.outputs.OpenALSoftCommitDate}}]
+        gh release create r${{needs.Build.outputs.DSOALCommitCount}} --repo ${{env.DSOALRepo}} --target ${{needs.Build.outputs.DSOALCommitHash}} --generate-notes --latest=false --prerelease --title "DSOAL r${{needs.Build.outputs.DSOALCommitCount}} + OpenAL Soft r${{needs.Build.outputs.OpenALSoftCommitCount}}" --notes "DSOAL r${{needs.Build.outputs.DSOALCommitCount}}-${{needs.Build.outputs.DSOALCommitHashShort}} ${{needs.Build.outputs.DSOALBranch}} - ${{needs.Build.outputs.DSOALCommitTitle}} [${{needs.Build.outputs.DSOALCommitDate}}]
+        OpenAL Soft r${{needs.Build.outputs.OpenALSoftCommitCount}}-${{needs.Build.outputs.OpenALSoftCommitHashShort}} ${{needs.Build.outputs.OpenALSoftBranch}} - ${{needs.Build.outputs.OpenALSoftCommitTitle}} [${{needs.Build.outputs.OpenALSoftCommitDate}}]
         Build log: https://github.com/${{env.DSOALRepo}}/actions/runs/${{github.run_id}}"
         gh release upload r${{needs.Build.outputs.DSOALCommitCount}} --repo ${{env.DSOALRepo}} --clobber DSOAL.zip
 
     - name: Release - latest-${{needs.Build.outputs.DSOALBranch}}
       run: |
-        gh release create latest-${{needs.Build.outputs.DSOALBranch}} --repo ${{env.DSOALRepo}} --target ${{needs.Build.outputs.DSOALCommitHash}} --generate-notes --latest=true --prerelease --title "DSOAL r${{needs.Build.outputs.DSOALCommitCount}} + OpenAL Soft r${{needs.Build.outputs.OpenALSoftCommitCount}}" --notes "DSOAL r${{needs.Build.outputs.DSOALCommitCount}}@${{needs.Build.outputs.DSOALCommitHashShort}} ${{needs.Build.outputs.DSOALBranch}} - ${{needs.Build.outputs.DSOALCommitTitle}} [${{needs.Build.outputs.DSOALCommitDate}}]
-        OpenAL Soft r${{needs.Build.outputs.OpenALSoftCommitCount}}@${{needs.Build.outputs.OpenALSoftCommitHashShort}} ${{needs.Build.outputs.OpenALSoftBranch}} - ${{needs.Build.outputs.OpenALSoftCommitTitle}} [${{needs.Build.outputs.OpenALSoftCommitDate}}]
+        gh release create latest-${{needs.Build.outputs.DSOALBranch}} --repo ${{env.DSOALRepo}} --target ${{needs.Build.outputs.DSOALCommitHash}} --generate-notes --latest=true --prerelease --title "DSOAL r${{needs.Build.outputs.DSOALCommitCount}} + OpenAL Soft r${{needs.Build.outputs.OpenALSoftCommitCount}}" --notes "DSOAL r${{needs.Build.outputs.DSOALCommitCount}}-${{needs.Build.outputs.DSOALCommitHashShort}} ${{needs.Build.outputs.DSOALBranch}} - ${{needs.Build.outputs.DSOALCommitTitle}} [${{needs.Build.outputs.DSOALCommitDate}}]
+        OpenAL Soft r${{needs.Build.outputs.OpenALSoftCommitCount}}-${{needs.Build.outputs.OpenALSoftCommitHashShort}} ${{needs.Build.outputs.OpenALSoftBranch}} - ${{needs.Build.outputs.OpenALSoftCommitTitle}} [${{needs.Build.outputs.OpenALSoftCommitDate}}]
         Build log: https://github.com/${{env.DSOALRepo}}/actions/runs/${{github.run_id}}"
         gh release upload latest-${{needs.Build.outputs.DSOALBranch}} --repo ${{env.DSOALRepo}} --clobber DSOAL.zip
