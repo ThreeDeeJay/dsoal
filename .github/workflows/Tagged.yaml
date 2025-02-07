@@ -44,7 +44,7 @@ jobs:
         git clone --branch ${{env.OpenALSoftBranch}} https://github.com/${{env.OpenALSoftRepo}}.git
         cd "openal-soft"
         git fetch --tags
-        echo "OpenALSoftCommitTag=$(git tag --list "*.*.*" --contains $(git rev-parse HEAD))" >> $env:GITHUB_ENV
+        echo "OpenALSoftCommitTag=$(git describe --tags --abbrev=0 --match *.*.*)" >> $env:GITHUB_ENV
         cd "${{github.workspace}}"
 
     - name: Clone OpenAL Soft v${{env.OpenALSoftCommitTag}}
