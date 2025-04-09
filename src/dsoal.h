@@ -33,7 +33,7 @@ constexpr auto as_unsigned(T value) noexcept
 }
 
 inline constexpr size_t MaxSources{1024};
-inline constexpr size_t MaxHwSources{128};
+inline constexpr size_t MaxHwSources{256};
 
 auto wstr_to_utf8(std::wstring_view wstr) -> std::string;
 auto utf8_to_wstr(std::string_view str) -> std::wstring;
